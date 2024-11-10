@@ -6,7 +6,7 @@ public class Word{
     doc_IDS=new LinkedList<Integer>();
   }
   public void add_Id(int id){
-    if (!existstsIn_doc_IDS(id))
+    if (!existsIn_doc_IDS(id))
       doc_IDS.insert(id);
   }
   public boolean existstsIn_doc_IDS(Integer id){
