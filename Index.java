@@ -1,3 +1,4 @@
+
 public class Index {
 
     LinkedList<Document> allDocs;
@@ -17,12 +18,12 @@ public class Index {
         if (allDocs.empty())
             return;
 
-        allDocs.findfirst();
+        allDocs.findFirst();
         while (! allDocs.last()){
             Document doc = allDocs.retrieve();
             System.out.println("ID: "+ doc.id);
             doc.words.display();//*******************************
-            allDocs.findnext();
+            allDocs.findNext();
 
         }
         //for last one
