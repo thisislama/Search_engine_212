@@ -24,4 +24,11 @@ public class Word {
         }
         return doc_IDS.retrieve().equals(id);
     }
+
+    public void display() {
+        System.out.println("\n------------");
+        System.out.println("Word: "+text+"\n[");
+        doc_IDS.display();
+        System.out.println("]");
+    }
 }
