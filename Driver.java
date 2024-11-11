@@ -94,7 +94,7 @@ public class Driver{
   {
     Driver d=new Driver();
     d.LoadAllFiles("stop.txt","dataset.csv");
-    d.ind1.displayDocuments();
+    d.ind1.displayDocs();
     System.out.println("\n----------------------------");
     d.Inverted.display_inverted_index();
   }
