@@ -1,7 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IoException;
-import java.util.Scaneer;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.LinkedList;
 public class Driver{
   LinkedList<String> stopWords;
   Index ind1;
@@ -12,7 +13,7 @@ public class Driver{
   ind1= new Index();
   inverted= new Inverted();
   }
-  public void Load_stopWords(String fileName)
+  public void LoadStopWords(String fileName)
   {
   try{
     File f=new File(fileName);
@@ -27,7 +28,7 @@ public class Driver{
     {
       e.printStackTrace();
     }
-    public void LoadAllDoc(String fileName);
+    public void LoadAllDoc(String fileName)
     {
       String line=null;
       try{
@@ -42,8 +43,8 @@ public class Driver{
             break;
           }
           String x=line.substring(0,line.indexOf(','));
-          int id=Integer.parsInt(x.trim());
-          String content=line.substring(line.indexOf(',')+1).trim());
+          int id=Integer.parseInt(x.trim());
+          String content=line.substring(line.indexOf(',')+1).trim();
           LinkedList<String> wordsInDoc=MakeLinkedListOfWordsInDocIndexInvertedIndex(content,id);
           ind1.add_Document(new Document(id,wordsInDoc));
         }
@@ -60,7 +61,7 @@ public class Driver{
   public void MakeIndexAndInvertedIndex(String content,LinkedList<String>wordsInDoc,int id)
   {
     contect=content.toLowerCase().replaceAll("[^a-zA-Z0-9 ]","");
-    String[] tokens=content.split("\\+);
+    String[] tokens=content.split("\\s+);
     for(String w:tokens){
       if(!existIn_stop_words(w)){
       wordsInDoc.insert(w);
