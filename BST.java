@@ -1,7 +1,16 @@
-class BSTNode<T>{
-    T data;
-    BSTNode<T> left, right;
+import java.util.LinkedList;
 
+class BSTNode<T>{
+    public String key;
+    public T data;
+    public BSTNode<T> left, right;
+
+    public BSTNode(String key, T data){
+        this.key = key;
+        this.data = data;
+        left = right = null;
+
+    }
 }
 
 
@@ -11,6 +20,10 @@ public class BST<T> {
 
     public BST(){
         current =root = null;
+    }
+
+    public void clear(){
+        current = root = null;
     }
 
     public boolean empty(){
@@ -24,4 +37,79 @@ public class BST<T> {
     public T retrieve(){
         return current.data;
     }
+
+    public boolean findKey(String k){
+        BSTNode<T> p = root;
+        while(p!=null) {
+            current = p;
+            if (k.compareToIgnoreCase(p.key) == 0) {
+                return true;
+            } else if (k.compareToIgnoreCase(p.key) < 0) {
+                p = p.left;
+            } else {
+                p = p.right;
+            }
+        }
+        return false;
+        }
+
+
+public boolean insert(String k,T val){
+    if(root==null)
+    {
+        current = root = new BSTNode<T>(k, val);
+        return true;
+    }
+    BSTNode<T> p = current;
+    if(findKey(k)){
+        current=p;
+        return false;
+    }
+    BSTNode<T> tmp = new BSTNode<T>(k, val);
+    if (k.compareToIgnoreCase(current.key) < 0) {
+        current.left=tmp;
+    }
+    else{
+        current.right=tmp;
+    }
+    current =tmp;
+    return true;
 }
+
+public void inOrder(){
+        if(root==null)
+            System.out.println("Empty Tree");
+        else
+            inOrder(root);
+}
+
+private void inOrder(BSTNode<T> p){
+
+        if(p==null) return;
+        inOrder(p.left);
+        System.out.print("Key= "+p.key);
+        System.out.print(p.data.toString());
+        inOrder(p.right);
+    }
+
+    public void preOrder() {
+        if (root == null)
+            System.out.println("Empty Tree");
+        else
+            preOrder(root);
+    }
+
+    private void preOrder(BSTNode<T> p) {
+        if(p==null) return;
+         System.out.print("Key= "+p.key);
+         System.out.print(p.data.toString());
+
+         preOrder(p.left);
+         preOrder(p.right);
+    }
+
+
+    }
+
+
+
