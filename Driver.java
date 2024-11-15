@@ -1,8 +1,9 @@
+package cscproject;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-//import java.util.LinkedList;
+
 public class Driver{
   LinkedList<String> stopWords;
   Index ind1;
@@ -15,7 +16,7 @@ public class Driver{
   }
   public void LoadStopWords(String fileName)
   {
-  try{
+  try {
     File f=new File(fileName);
       Scanner s=new Scanner(f);
       while(s.hasNextLine() )
@@ -27,12 +28,12 @@ public class Driver{
     catch(IOException e)
     {
       e.printStackTrace();
-    }
-  }
+    }}
+  
     public void LoadAllDoc(String fileName)
     {
       String line=null;
-      try{
+      try {
         File f=new File(fileName);
         Scanner s=new Scanner(f);
         s.nextLine();
@@ -47,8 +48,9 @@ public class Driver{
           int id=Integer.parseInt(x.trim());
           String content=line.substring(line.indexOf(',')+1).trim();
           LinkedList<String> wordsInDoc=MakeLinkedListOfWordsInDocIndexInvertedIndex(content,id);
-          ind1.add_Document(new Document(id,wordsInDoc));
+          ind1.addDoc(new Document(id,wordsInDoc));
         }
+        
       }catch(IOException e){
         System.out.println("Empty of file");
     }
@@ -66,7 +68,7 @@ public class Driver{
     for(String w:tokens){
       if(!existIn_stop_words(w)){
       wordsInDoc.insert(w);
-        Inverted.add(w,id);
+        inverted.add(w,id);
       }
     }
   }
@@ -79,7 +81,7 @@ public class Driver{
       if(stopWords.retrieve().equals(word)){
         return true;
       }
-      stopWords.findFirst();
+      stopWords.findNext();
     }
      if(stopWords.retrieve().equals(word)){
        return true;
@@ -97,7 +99,7 @@ public class Driver{
     d.LoadAllFiles("stop.txt","dataset.csv");
     d.ind1.displayDocs();
     System.out.println("\n----------------------------");
-    d.Inverted.display_inverted_index();
+    d.inverted.diaplay_InvertedList();
   }
   public void displaystopWords(){
     stopWords.display();
