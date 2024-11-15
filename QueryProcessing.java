@@ -1,8 +1,8 @@
 public class QueryProcessing {
 
-    static InvertedIndex inverted;
+    static Inverted inverted;
 
-    public QueryProcessing(InvertedIndex inverted) {
+    public QueryProcessing(Inverted inverted) {
         this.inverted = inverted;
     }
 
@@ -15,12 +15,12 @@ public class QueryProcessing {
             return A;
         }
 
-        boolean found = inverted.search_word_in_inverted(terms[0].trim().toLowerCase());
+        boolean found = inverted.Search_InvertedList(terms[0].trim().toLowerCase());
         if (found)
             A = inverted.inverted_index.retreive().doc_IDS;
 
         for (int i = 1; i < terms.length; i++) {
-            found = inverted.search_word_in_inverted(terms[i].trim().toLowerCase());
+            found = inverted.Search_InvertedList(terms[i].trim().toLowerCase());
             if (found)
                 B = inverted.inverted_index.retreive().doc_IDS;
             A = AndQuery(A , B);
