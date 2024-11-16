@@ -17,12 +17,12 @@ public class QueryProcessing {
 
         boolean found = inverted.Search_InvertedList(terms[0].trim().toLowerCase());
         if (found)
-            A = inverted.inverted_index.retreive().doc_IDS;
+            A = inverted.InvertList.retrieve().doc_IDS;
 
         for (int i = 1; i < terms.length; i++) {
             found = inverted.Search_InvertedList(terms[i].trim().toLowerCase());
             if (found)
-                B = inverted.inverted_index.retreive().doc_IDS;
+                B = inverted.InvertList.retrieve().doc_IDS;
             A = AndQuery(A , B);
         }
         return A;
@@ -31,7 +31,7 @@ public class QueryProcessing {
     public static LinkedList<Integer> AndQuery( LinkedList<Integer> A, LinkedList<Integer> B) {
         LinkedList<Integer> result = new LinkedList<Integer>();
 
-        if (A.empty() || B.empty())
+        if (A.isEmpty() || B.isEmpty())
             return result;
 
         A.findFirst();
@@ -63,7 +63,6 @@ public class QueryProcessing {
         return result;
 
     }
-    ////////////////////////////////////////////////////////////
 
     public static LinkedList<Integer> OrQuery(String Query){
 
@@ -77,12 +76,12 @@ public class QueryProcessing {
 
         boolean found = inverted.Search_InvertedList(terms[0].trim().toLowerCase());
         if (found)
-            A = inverted.inverted_index.retreive().doc_IDS;
+            A = inverted.InvertList.retrieve().doc_IDS;
 
         for (int i = 1; i < terms.length; i++) {
             found = inverted.Search_InvertedList(terms[i].trim().toLowerCase());
             if (found)
-                B = inverted.inverted_index.retreive().doc_IDS;
+                B = inverted.InvertList.retrieve().doc_IDS;
             A = OrQuery(A , B);
 
         }
@@ -92,11 +91,11 @@ public class QueryProcessing {
     public static LinkedList<Integer> OrQuery(LinkedList<Integer> A, LinkedList<Integer> B) {
 
         LinkedList<Integer> result = new LinkedList<Integer>();
-        if (A.empty() && B.empty())
+        if (A.isEmpty() && B.isEmpty())
             return result;
 
         A.findFirst();
-        while(!A.empty()){
+        while(!A.isEmpty()){
 
             boolean found = existsIn_result(result , A.retrieve());
             if (!found)
@@ -108,7 +107,7 @@ public class QueryProcessing {
         }
 
         B.findFirst();
-        while (!B.empty()){
+        while (!B.isEmpty()){
 
             boolean found = existsIn_result(result , B.retrieve());
             if (!found)
@@ -123,8 +122,9 @@ public class QueryProcessing {
 
     }
 
+
     public static boolean existsIn_result(LinkedList<Integer> result, Integer id) {
-        if (result.empty())
+        if (result.isEmpty())
             return false;
         result.findFirst();
         while(!result.last()){
@@ -137,6 +137,5 @@ public class QueryProcessing {
         return false;
 
     }
-
 
 }

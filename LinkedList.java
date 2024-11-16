@@ -16,7 +16,7 @@ public class LinkedList<T> {
         head = current = null;
     }
 
-    public boolean empty() {
+    public boolean isEmpty() {
         return head == null;
     }
 
