@@ -154,9 +154,29 @@ all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
 return;
 }
-    else{
-all_doc_ranked.findNext() ;
+ //   else{
+//all_doc_ranked.findNext() ;
+//    }
+else if (dr.rank == all_doc_ranked.retrieve().rank){
+
+    while(!all_doc_ranked.last()&& dr.rank==all_doc_ranked.retrieve().rank&& dr.id> all_doc_ranked.retrieve().id)
+    all_doc_ranked.findNext();
+
+    if (!all_doc_ranked.last()|| dr.id< all_doc_ranked.retrieve().id){
+        Doc_Rank dr1 = all_doc_ranked.retrieve();
+        all_doc_ranked.update(dr);
+        all_doc_ranked.insert(dr1);
+        return;
     }
+    else{
+        all_doc_ranked.insert(dr);
+        return;
+    }
+
+}
+else{
+    all_doc_ranked.findNext() ;}
+
 }
 if (dr.rank > all_doc_ranked.retrieve().rank) {
 Doc_Rank dr1=all_doc_ranked.retrieve () ;
@@ -164,4 +184,15 @@ all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
 return;
 }
-all_doc_ranked.insert(dr) ;}}
+
+if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){}
+Doc_Rank dr1=all_doc_ranked.retrieve () ;
+all_doc_ranked.update(dr) ;
+all_doc_ranked.insert(dr1) ;
+return;}
+else{
+    all_doc_ranked.insert(dr);
+    return;
+}
+
+}}
