@@ -18,11 +18,17 @@ public class QueryProcessing {
         boolean found = inverted.Search_InvertedList(terms[0].trim().toLowerCase());
         if (found)
             A = inverted.InvertList.retrieve().doc_IDS;
+        else 
+            System.out.println("Term not found: " + terms[0]);
 
         for (int i = 1; i < terms.length; i++) {
             found = inverted.Search_InvertedList(terms[i].trim().toLowerCase());
             if (found)
                 B = inverted.InvertList.retrieve().doc_IDS;
+            else {
+                System.out.println("Term not found: " + terms[i]);
+                B = new LinkedList<>();
+            }
             A = AndQuery(A , B);
         }
         return A;
