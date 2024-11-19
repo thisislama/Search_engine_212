@@ -1,4 +1,4 @@
-public class QueryProcessing {
+/*public class QueryProcessing {
 
     static Inverted inverted;
 
@@ -144,4 +144,4 @@ public class QueryProcessing {
 
     }
 
-}
+}*/

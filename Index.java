@@ -15,7 +15,7 @@ public class Index {
 
     public void displayDocs(){
 
-        if (allDocs.empty())
+        if (allDocs.isEmpty())
             return;
 
         allDocs.findFirst();

@@ -22,7 +22,7 @@ public class Inverted {
 
 
     public boolean Search_InvertedList(String w ) {
-        if(InvertList == null || InvertList.empty())
+        if(InvertList == null || InvertList.isEmpty())
           return false;
 
         InvertList.findFirst();
@@ -43,7 +43,7 @@ public class Inverted {
             System.out.println("Inverted list is Null");
             return;
         }
-        else if(InvertList.empty()){
+        else if(InvertList.isEmpty()){
             System.out.println("Inverted list is empty");
         return;
         }
