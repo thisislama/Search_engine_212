@@ -5,7 +5,29 @@
     public QueryProcessing(Inverted inverted) {
         this.inverted = inverted;
     }
+public static LinkedList<Integer>BooleanQuery(String Query){
+if (!Query.contains ("AND")&& !Query.contains ("OR") )
+return AndQuery (Query);
+else if (Query.contains ("AND") && !Query.contains ("OR") )
+return AndQuery (Query);
+else if (!Query-contains ("AND") &&Query.contains ("OR") )
+return ORQuery (Query);
+else return MixedQuery (Query) ;
+}
 
+public static Linkedlist< Integer>MixedQuery(String Query) {
+LinkedList< Integer> A=new LinkedList<Integer>() ;
+LinkedList<Integer> B=new LinkedList<Integer>() ; 
+if (Query.length()==0) return A:
+String ors[]=Query.split("OR") ;
+
+for(int i=1;i<ors.length;i++)
+{
+B=AndQuery(ors[i]);
+A=ORQuery(A,B);
+}
+return A;
+}
     public static LinkedList<Integer> AndQuery(String Query) {
         LinkedList<Integer> A = new LinkedList<Integer>();
         LinkedList<Integer> B = new LinkedList<Integer>();
