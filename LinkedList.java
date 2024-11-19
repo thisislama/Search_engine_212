@@ -1,3 +1,4 @@
+
 class Node<T> {
     public T data;
     public Node<T> next;
@@ -11,6 +12,7 @@ class Node<T> {
 public class LinkedList<T> {
     private Node<T> head;
     private Node<T> current;
+    int n =0;
 
     public LinkedList() {
         head = current = null;
@@ -37,27 +39,52 @@ public class LinkedList<T> {
     public T retrieve() {
         return current != null ? current.data : null;
     }
-
-    public void insert(T val) {
-        Node<T> newNode = new Node<>(val);
-        newNode.next = head;
-        head = newNode;
-        current = head;
+    
+    public void update (T val){
+        current.data = val;
     }
 
+    public void insert(T val) {
+        n++ ;
+        Node<T> tmp; 
+        if (isEmpty())
+            current = head = new Node<T>(val);
+        else{
+           tmp = current.next;
+           current.next = new Node<T>(val);
+           current = current.next;
+           current.next = tmp;
+        }
+       
+    }
+    
+    
     public void display() {
+        if (this == null){
+            System.out.println("The list is null.");
+            return;
+        }
         if (head == null) {
             System.out.println("The list is empty.");
             return;
         }
 
-        Node<T> current = head;
-        while (current != null) {
-            System.out.print(current.data + " -> ");
-            current = current.next;
+        Node<T> p = head;
+        while (p != null) {
+            System.out.print(p.data + " -> ");
+            p = p.next;
         }
-        System.out.println("null");
     }
-
-
+    
+    public boolean exist(T x){
+        
+        Node <T> p = head;
+        while (p != null){
+            if (p.data.equals(x))
+                return true;
+            p = p.next;
+            
+        }
+        return false;
+    }
 }
