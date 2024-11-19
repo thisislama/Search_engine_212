@@ -13,6 +13,14 @@ public class Word {
             doc_IDS.insert(id);
     }
 // can use exists in LinkedList instead
+
+    public void display(){
+        System.out.println("\n---------------");
+        System.out.println("word:"+text);
+                System.out.println("[");
+        doc_IDS.display();
+                System.out.println("]");
+    }
     public boolean existsIn_doc_IDS(Integer id) {
         if (doc_IDS.isEmpty())
             return false;
@@ -23,13 +31,10 @@ public class Word {
             }
             doc_IDS.findNext();
         }
-        return doc_IDS.retrieve().equals(id);
+if (doc_IDS.retrieve().equals(id)) {
+                return true;
+}
+        return false;
     }
 
-    public void display() {
-        System.out.println("\n------------");
-        System.out.println("Word: "+text+"\n[");
-        doc_IDS.display();
-        System.out.println("]");
-    }
 }
