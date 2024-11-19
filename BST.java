@@ -26,7 +26,7 @@ public class BST<T> {
         current = root = null;
     }
 
-    public boolean empty(){
+    public boolean isEmpty(){
         return root==null;
     }
 
