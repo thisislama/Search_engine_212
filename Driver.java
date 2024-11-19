@@ -94,7 +94,7 @@ public class Driver {
   }
   public static void main(String[]args)
   {
-    Driver d=new Driver();
+    Driver d= new Driver();
     d.LoadAllFiles("stop.txt","dataset.csv");
     d.ind1.displayDocs();
     System.out.println("\n----------------------------");
