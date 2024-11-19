@@ -1,3 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.csc212project;
+
+/**
+ *
+ * @author 96650
+ */
 class Doc_Rank{
 int id;
 int rank;
@@ -16,7 +26,7 @@ static Index indexl;
 static LinkedList<Integer> all_doc_in_query;
 static LinkedList<Doc_Rank>all_doc_ranked;
 
-public Ranking (InvertedIndeBST inverted, Index indexl, String Query) {
+public Ranking (InvertedIndexBST inverted, Index indexl, String Query) {
 this.inverted=inverted;
 this.indexl=indexl;
 this.Query=Query;
@@ -25,7 +35,7 @@ all_doc_ranked=new LinkedList<Doc_Rank> () ;
 }
 public static void display_all_doc_with_score_usingList()
 {
-if (all_doc_ranked.empty() ) {
+if (all_doc_ranked.isEmpty() ) {
 System.out.println("empty") ;
 return;}
 System.out.printf("%-8s%-8s\n", "DoCID", "Score") ;
@@ -42,7 +52,7 @@ all_doc_ranked.retrieve().display();}
 public static int term_frequency_in_doc (Document d, String term){
 int freq=0;
 LinkedList<String>words=d.words;
-if (words.empty()) return 0;
+if (words.isEmpty()) return 0;
  words.findFirst ();
 while (!words.last()){
 if (words.retrieve ().equalsIgnoreCase(term))
@@ -77,10 +87,10 @@ Adding_in_1_List_sorted(A);
 }
 public static void Adding_in_1_List_sorted(LinkedList<Integer>A)
 {
-if (A.empty())
+if (A.isEmpty())
 return ;
 A.findFirst();
-while(!A.empty()) {
+while(!A.isEmpty()) {
 boolean found=existsIn_result(all_doc_in_query, A.retrieve()) ;
 if(!found) {
 insert_sorted_Id_list(A. retrieve ()) ;
@@ -92,7 +102,7 @@ else
 }
 
 public static boolean existsIn_result (LinkedList<Integer>result, Integer id){
-if (result.empty()) return false;
+if (result.isEmpty()) return false;
 result.findFirst ();
 while (!result.last ()) {
 if (result.retrieve().equals(id) ) {
@@ -104,7 +114,7 @@ return true;}
 return false;}
 
 public static void insert_sorted_Id_list (Integer id){
-     if (all_doc_in_query.empty()) {
+     if (all_doc_in_query.isEmpty()) {
          all_doc_in_query.insert(id);
 return;}
 all_doc_in_query.findFirst () ;
@@ -124,7 +134,7 @@ all_doc_in_query.insert(id) ;
 }
 public static void insert_sorted_in_list(){
 RankQuery(Query);
-if(all_doc_in_query.empty ()) {
+if(all_doc_in_query.isEmpty ()) {
 System.out.println("empty query") ;
 return;}
 
@@ -141,7 +151,7 @@ while (!all_doc_in_query.last ())
     all_doc_in_query.findNext() ;
 }
 public static void insert_sorted_list(Doc_Rank dr){
-if(all_doc_ranked.empty ()) {
+if(all_doc_ranked.isEmpty ()) {
 all_doc_ranked.insert(dr) ;
 return;
 }
@@ -185,7 +195,7 @@ all_doc_ranked.insert(dr1) ;
 return;
 }
 
-if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){}
+if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){
 Doc_Rank dr1=all_doc_ranked.retrieve () ;
 all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
