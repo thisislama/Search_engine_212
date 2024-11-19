@@ -33,10 +33,10 @@ System.out.printf("%-8s%-8s\n", "DoCID", "Score") ;
 all_doc_ranked. findFirst ();
 while (!all_doc_ranked. last ()){
 all_doc_ranked.retrieve().display();
-all_doc_ranked.findNext();{
+all_doc_ranked.findNext();
+}
 all_doc_ranked.retrieve().display();}
-}
-}
+
  public static Document get_doc_given_id(int id) {
     return index1.get_document_given_id(id);
  }
@@ -66,13 +66,13 @@ return sum_freq;
 public static void RankQuery (String Query) {
 LinkedList<Integer> A=new LinkedList<Integer>();
 if (Query.length()==0) return ;
-String terms []=Query.split (" "); 
+String terms []=Query.split ("\\s+"); 
 boolean found=false;
 for (int i=0;i<terms.length;i++){
 
-found=inverted. search_word_in_inverted (terms [i].trim().toLowerCase()) ;
+found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-A=inverted. inverted_index.retrieve().doc_IDS;
+A=inverted.inverted_index.retrieve().doc_IDS;
 Adding_in_1_List_sorted(A);
 }
 }
@@ -84,7 +84,7 @@ A.findFirst();
 while(!A.isEmpty()) {
 boolean found=existsIn_result(all_doc_in_query, A.retrieve()) ;
 if(!found) {
-insert_sorted_Id_list(A. retrieve ()) ;
+insert_sorted_Id_list(A.retrieve()) ;
 }
 if (!A.last () )
 A.findNext () ;
@@ -117,11 +117,16 @@ all_doc_in_query.update(id) ;
 all_doc_in_query.insert(id1) ;
 return;
 }
-else{
+else
 all_doc_in_query.findNext() ;
 }
-}
-all_doc_in_query.insert(id) ;
+if (id<all_doc_in_query.retrieve ()){
+Integer id1=all_doc_in_query.retrieve() ;
+all_doc_in_query.update(id) ;
+all_doc_in_query.insert(id1) ;
+return;}
+ else
+ all_doc_in_query.insert(id) ;
 }
 public static void insert_sorted_in_list(){
 RankQuery(Query);
@@ -139,7 +144,6 @@ while (!all_doc_in_query.last ())
     Document d = get_doc_given_id(all_doc_in_query.retrieve());
     int Rank=get_doc_rank_score (d, Query) ;
     insert_sorted_list(new Doc_Rank(all_doc_in_query.retrieve(), Rank));
-    all_doc_in_query.findNext() ;
 }
 public static void insert_sorted_list(Doc_Rank dr){
 if(all_doc_ranked.isEmpty ()) {
@@ -155,46 +159,16 @@ all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
 return;
 }
- //   else{
-//all_doc_ranked.findNext() ;
-//    }
-else if (dr.rank == all_doc_ranked.retrieve().rank){
-
-    while(!all_doc_ranked.last()&& dr.rank==all_doc_ranked.retrieve().rank&& dr.id> all_doc_ranked.retrieve().id)
-    all_doc_ranked.findNext();
-
-    if (!all_doc_ranked.last()|| dr.id< all_doc_ranked.retrieve().id){
-        Doc_Rank dr1 = all_doc_ranked.retrieve();
-        all_doc_ranked.update(dr);
-        all_doc_ranked.insert(dr1);
-        return;
-    }
-    else{
-        all_doc_ranked.insert(dr);
-        return;
-    }
-
-}
-else{
-    all_doc_ranked.findNext() ;}
-
-}
-if (dr.rank > all_doc_ranked.retrieve().rank) {
+   else
+all_doc_ranked.findNext() ;
+   }
+ if (dr.rank > all_doc_ranked.retrieve().rank) {
 Doc_Rank dr1=all_doc_ranked.retrieve () ;
 all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
 return;
 }
-
-if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){
-Doc_Rank dr1=all_doc_ranked.retrieve () ;
-all_doc_ranked.update(dr) ;
-all_doc_ranked.insert(dr1) ;
-return;}
-else {
-    all_doc_ranked.insert(dr);
-    return;
-}
-
+ else
+ all_doc_ranked.findNext() ;
 }
 }
