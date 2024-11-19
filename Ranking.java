@@ -1,3 +1,13 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package com.mycompany.csc212project;
+
+/**
+ *
+ * @author 96650
+ */
 class Doc_Rank{
 int id;
 int rank;
@@ -16,7 +26,7 @@ static Index indexl;
 static LinkedList<Integer> all_doc_in_query;
 static LinkedList<Doc_Rank>all_doc_ranked;
 
-public Ranking (InvertedIndeBST inverted, Index indexl, String Query) {
+public Ranking (InvertedIndexBST inverted, Index indexl, String Query) {
 this.inverted=inverted;
 this.indexl=indexl;
 this.Query=Query;
@@ -185,7 +195,7 @@ all_doc_ranked.insert(dr1) ;
 return;
 }
 
-if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){}
+if(all_doc_ranked.last()&& dr.id < all_doc_ranked.retrieve().id){
 Doc_Rank dr1=all_doc_ranked.retrieve () ;
 all_doc_ranked.update(dr) ;
 all_doc_ranked.insert(dr1) ;
