@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+
 
 class BSTNode<T>{
     public String key;
@@ -86,9 +86,9 @@ public void inOrder(){
 private void inOrder(BSTNode<T> p){
 
         if(p==null) return;
+        
         inOrder(p.left);
-        System.out.print("Key= "+p.key);
-        System.out.print(p.data.toString());
+        ((Word)p.data).display();
         inOrder(p.right);
     }
 
@@ -110,6 +110,3 @@ private void inOrder(BSTNode<T> p){
 
 
     }
-
-
-
