@@ -3,7 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class Driver{
+public class Driver {
   LinkedList<String> stopWords;
   Index ind1;
   Inverted inverted;
@@ -73,7 +73,7 @@ public class Driver{
   }
   public boolean existIn_stop_words(String word)
   {
-    if(stopWords==null || stopWords.empty())
+    if(stopWords==null || stopWords.isEmpty())
       return false;
     stopWords.findFirst();
     while(!stopWords.last()){
@@ -103,4 +103,19 @@ public class Driver{
   public void displaystopWords(){
     stopWords.display();
   }
+}
+
+public static void display_menu(){
+  System.out.println("1- Retrieve a term (there are choices"
+  +":using index with lists"
+  +"-inverted index with lists"
+  +"-inverted index with BST.");
+  System.out.println("2- Boolean Retrieval.");
+  System.out.println("3- Ranking Retrieval.");
+  System.out.println("4- Indexed Documents: print all document.");
+  System.out.println("5- Number of Documents in the index.");
+  System.out.println("6- Number of unique words in indexed.");
+  System.out.println("7- Show inverted index with list of lists.");
+  System.out.println("8- Show inverted index with BST.");
+  System.out.println("9- Indexed tokens: to show number of vocabulary and tokens in the index.");
 }
