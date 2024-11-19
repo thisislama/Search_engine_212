@@ -4,17 +4,24 @@ import java.io.IOException;
 import java.util.*;
 
 public class Driver {
+  
   LinkedList<String> stopWords;
-  Index ind1;
+  Index index1;
   Inverted inverted;
-  public Driver()
-  {
+  InvertedIndexBST invertedBST;
+  int num_token = 0;
+  LinkedList<String> uniqueWords = new LinkedList<>();
+  
+  public Driver(){
+    
   stopWords= new LinkedList<>();
-  ind1= new Index();
+  index1= new Index();
   inverted= new Inverted();
+  invertedBST = new InvertedIndexBST();
   }
-  public void LoadStopWords(String fileName)
-  {
+  
+  public void LoadStopWords(String fileName){
+    
   try {
     File f=new File(fileName);
       Scanner s=new Scanner(f);
@@ -35,42 +42,60 @@ public class Driver {
       try {
         File f=new File(fileName);
         Scanner s=new Scanner(f);
+        
         s.nextLine();
         while(s.hasNextLine()){
           line=s.nextLine();
           if(line.trim().length()<3)
           {
-            System.out.println("Empty line");
+            System.out.println("Empty line"+line);
             break;
           }
+          
           String x=line.substring(0,line.indexOf(','));
           int id=Integer.parseInt(x.trim());
+          System.out.println("line: "+line);
           String content=line.substring(line.indexOf(',')+1).trim();
+          System.out.println("content: "+content);
+          
           LinkedList<String> wordsInDoc=MakeLinkedListOfWordsInDocIndexInvertedIndex(content,id);
-          ind1.addDoc(new Document(id,wordsInDoc));
+          index1.addDoc(new Document(id,wordsInDoc, content));
         }
         
       }catch(IOException e){
-        System.out.println("Empty of file");
+        System.out.println("end of file");
     }
     }
+
+  
   public LinkedList<String> MakeLinkedListOfWordsInDocIndexInvertedIndex(String content,int id)
   {
    LinkedList<String>wordsInDoc=new LinkedList<String>();
     MakeIndexAndInvertedIndex(content,wordsInDoc,id);
     return wordsInDoc;
   }
+
+  
   public void MakeIndexAndInvertedIndex(String content,LinkedList<String>wordsInDoc,int id)
   {
+    content=content.toLowerCase().replaceAll("\'"," ");
+    content=content.toLowerCase().replaceAll("-"," ");
     content=content.toLowerCase().replaceAll("[^a-zA-Z0-9 ]","");
     String[] tokens=content.split("\\s+");
+    
     for(String w:tokens){
-      if(!existIn_stop_words(w)){
-      wordsInDoc.insert(w);
-        inverted.add(w,id);
+      if(!uniqueWords.exist(w)){
+      uniqueWords.insert(w);
+      }
+      if (!existIn_stop_words(w)){
+          wordsInDoc.insert(w);
+          inverted.add(w,id);
+          invertedBST.add(w , id);
       }
     }
   }
+
+  
   public boolean existIn_stop_words(String word)
   {
     if(stopWords==null || stopWords.isEmpty())
@@ -87,6 +112,30 @@ public class Driver {
      }
       return false;
   }
+
+
+public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
+      
+      if (IDs.isEmpty()){
+          System.out.println("no documents exist");
+          return;  
+      }
+      
+      IDs.findFirst();
+      while(!IDs.last()){
+          
+          Document d = index1.get_document_given_id(IDs.retrieve());
+          if (d != null)
+               System.out.println("Document "+d.id+" : "+d.content);
+          IDs.findNext();
+      }
+      Document d = index1.get_document_given_id(IDs.retrieve());
+      if (d != null)
+               System.out.println("Document "+d.id+" : "+d.content);
+       System.out.println("");
+  }
+  
+  
   public void LoadAllFiles(String stopFile,String DocsFile)
   {
     LoadStopWords(stopFile);
@@ -142,13 +191,13 @@ int ch=0;
             System.out.print("- inverted index with lists");
             boolean found = d.inverted.search_word_in_inverted(term);
             if (found)
-              d.inverted.search_inverted_index.retreive().display();
+              d.inverted.search_inverted_index.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
             System.out.println("- inverted index with BST");
             boolean found2 = d.invertedBST.search_word_in_inverted(term);
             if (found2)
-              d.inverted.search_inverted_index.retreive().display();
+              d.inverted.search_inverted_index.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
             break;
@@ -171,19 +220,19 @@ int ch=0;
                 QueryProcessing_from_index q = new QueryProcessing_from_index(Driver.index1);
                 System.out.println("====="+ query+"======");
                 LinkedList res1 = QueryProcessing_from_index.MixedQuery(query);
-                d.display_doc_with_given_IDS(res1);
+                d.displayDocWithGivenIDS(res1);
               }
               else if (x == 2){
                 QueryProcessing q = new QueryProcessing(d.inverted)
                 System.out.println("====="+ query+"======");
                 LinkedList res1 = QueryProcessing.MixedQuery(query);
-                d.display_doc_with_given_IDS(res1);
+                d.displayDocWithGivenIDS(res1);
               }
               else if (x == 3){
                 QueryProcessing_BST q = new QueryProcessing_BST(d.invertedBST);
                 System.out.println("====="+ query+"======");
                 LinkedList res1 = QueryProcessing_BST.MixedQuery(query);
-                d.display_doc_with_given_IDS(res1);
+                d.displayDocWithGivenIDS(res1);
               }
               else if (x == 4){
                 break;
@@ -215,11 +264,11 @@ int ch=0;
               R5.display_all_doc_with_score_usingList();
               break;
               case 4:
-                d.index1.displayDocument();
+                d.index1.diaplay_InvertedList();
                 System.out.println("---------------------");
                 break;
                 case 5:
-                  System.out.println("Number of documents="+Driver.index1.all_doc);
+                  System.out.println("Number of documents="+Driver.index1.allDocs);
                   System.out.println("---------------------");
                   break;
                   case 6:
@@ -227,21 +276,21 @@ int ch=0;
                     System.out.println("---------------------");
                  break;
           case 7:
-            d.inverted.display_inverted_index();
+            d.inverted.diaplay_InvertedList();
             break;
           case 8:
             d.invertedBST.display_inverted_index();
             break;
           case 9:
-            System.out.println("num of tokens="+d.num_tokens);
-            System.out.println("num of unique words including stop words=="+d.unique_words.n);
+            System.out.println("num of tokens="+d.num_token);
+            System.out.println("num of unique words including stop words=="+d.uniqueWords.n);
             break;
           case 10:
             System.out.println("goodbye");
             break;
-          defulf:
+          default:
           System.out.println("error input try again");
-          breake;
+          break;
         }
     }while(ch!=10);
         }
