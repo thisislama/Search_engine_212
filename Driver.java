@@ -123,12 +123,12 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
       IDs.findFirst();
       while(!IDs.last()){
           
-          Document d = index1.get_doc_given_id(IDs.retrieve());
+          Document d = index1.get_document_given_id(IDs.retrieve());
           if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
           IDs.findNext();
       }
-      Document d = index1.get_doc_given_id(IDs.retrieve());
+      Document d = index1.get_document_given_id(IDs.retrieve());
       if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
        System.out.println("");
@@ -241,7 +241,7 @@ int ch=0;
 
               s.nextLine();
               System.out.println("enter a query to retrieve:");
-              String query = s.nextLine();
+              query = s.nextLine();
               query = query.toLowerCase();
               query = query.replaceAll("and","AND");
               query = query.replaceAll("or","OR");
