@@ -52,7 +52,9 @@ freq++;
 words.findNext() ;}
 if (words.retrieve().equalsIgnoreCase(term) )
 freq++;
-return freq;}
+return freq;
+
+}
 
 public static int get_doc_rank_score (Document d, String Query){
 if (Query.length()==0)
@@ -73,7 +75,7 @@ for (int i=0;i<terms.length;i++){
 
 found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-  A=inverted.Inverted.retrieve().doc_IDS;
+  A=inverted.inverted_indexBST.retrieve().doc_IDS;
   Adding_in_1_List_sorted(A);
 }
 }
