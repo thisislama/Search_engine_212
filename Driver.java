@@ -151,7 +151,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
   public void displaystopWords(){
     stopWords.display();
   }
-}
+
 
 public static void display_menu(){
   System.out.println("1- Retrieve a term (there are choices"
