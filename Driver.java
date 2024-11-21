@@ -120,16 +120,15 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
           System.out.println("no documents exist");
           return;  
       }
-      
       IDs.findFirst();
       while(!IDs.last()){
           
-          Document d = index1.get_document_given_id(IDs.retrieve());
+          Document d = index1.get_doc_given_id(IDs.retrieve());
           if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
           IDs.findNext();
       }
-      Document d = index1.get_document_given_id(IDs.retrieve());
+      Document d = index1.get_doc_given_id(IDs.retrieve());
       if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
        System.out.println("");
@@ -145,7 +144,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
   {
     Driver d= new Driver();
     d.LoadAllFiles("stop.txt","dataset.csv");
-    d.ind1.displayDocs();
+    d.index1.displayDocs();
     System.out.println("\n----------------------------");
     d.inverted.diaplay_InvertedList();
   }

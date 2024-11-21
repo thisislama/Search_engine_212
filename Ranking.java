@@ -24,21 +24,22 @@ this.Query=Query;
 all_doc_in_query=new LinkedList<Integer>() ;
 all_doc_ranked=new LinkedList<Doc_Rank> () ;
 }
-public static void display_all_doc_with_score_usingList()
-{
+public static void display_all_doc_with_score_usingList() {
 if (all_doc_ranked.isEmpty() ) {
 System.out.println("empty") ;
-return;}
+return;
+}
 System.out.printf("%-8s%-8s\n", "DoCID", "Score") ;
 all_doc_ranked. findFirst ();
 while (!all_doc_ranked. last ()){
 all_doc_ranked.retrieve().display();
 all_doc_ranked.findNext();
 }
-all_doc_ranked.retrieve().display();}
+all_doc_ranked.retrieve().display();
+}
 
  public static Document get_doc_given_id(int id) {
-    return index1.get_document_given_id(id);
+    return get_doc_given_id(id);
  }
 public static int term_frequency_in_doc (Document d, String term){
 int freq=0;
@@ -64,7 +65,7 @@ sum_freq+=term_frequency_in_doc(d, terms[i].trim().toLowerCase ()) ;
 return sum_freq;
 }
 public static void RankQuery (String Query) {
-LinkedList<Integer> A=new LinkedList<Integer>();
+LinkedList<Integer> A =new LinkedList<Integer>();
 if (Query.length()==0) return ;
 String terms []=Query.split ("\\s+"); 
 boolean found=false;
@@ -72,7 +73,7 @@ for (int i=0;i<terms.length;i++){
 
 found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-A=inverted.inverted_index.retrieve().doc_IDS;
+A=inverted.Inverted.retrieve().doc_IDS;
 Adding_in_1_List_sorted(A);
 }
 }

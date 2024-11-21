@@ -1,7 +1,7 @@
 public class BST_main {
     public static void main(String[] args) {
         BST<Double>bt = new BST<Double>();
-        System.out.println("is empty?"+bt.empty());
+        System.out.println("is empty?"+bt.isEmpty());
         System.out.println("______________________");
         System.out.println("inserting 11 nodes");
         bt.insert("A",35.0);//1
