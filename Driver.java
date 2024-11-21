@@ -3,16 +3,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class Driver {
+public static class driver {
   
   LinkedList<String> stopWords;
-  Index index1;
-  Inverted inverted;
+  static Index index1;
+  Inverted inverted;//invert index
   InvertedIndexBST invertedBST;
   int num_token = 0;
   LinkedList<String> uniqueWords = new LinkedList<>();
   
-  public Driver(){
+  public driver(){
     
   stopWords= new LinkedList<>();
   index1= new Index();
@@ -123,12 +123,12 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
       IDs.findFirst();
       while(!IDs.last()){
           
-          Document d = index1.get_doc_given_id(IDs.retrieve());
+          Document d = index1.getDoc(IDs.retrieve());
           if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
           IDs.findNext();
       }
-      Document d = index1.get_doc_given_id(IDs.retrieve());
+      Document d = index1.getDoc(IDs.retrieve());
       if (d != null)
                System.out.println("Document "+d.id+" : "+d.content);
        System.out.println("");
@@ -142,7 +142,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
   }
   public static void main(String[]args)
   {
-    Driver d= new Driver();
+    driver d= new driver();
     d.LoadAllFiles("stop.txt","dataset.csv");
     d.index1.displayDocs();
     System.out.println("\n----------------------------");
@@ -151,7 +151,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
   public void displaystopWords(){
     stopWords.display();
   }
-}
+}//class driver ends
 
 public static void display_menu(){
   System.out.println("1- Retrieve a term (there are choices"
@@ -169,7 +169,7 @@ public static void display_menu(){
 }
 
 public static void TeastwithMenu(){
-  Driver d=new Driver();
+  driver d= new driver();
     d.LoadAllFiles("stop.txt","dataset.csv");
         Scanner s = new Scanner(System.in);
 int ch=0;
@@ -182,21 +182,21 @@ int ch=0;
             String term = s.next();
             term = term.toLowerCase().trim();
             System.out.println(": using indix with lists");
-            LinkedList<Integer> res = Driver.ind1.get_all_documents_given_term(term);
+            LinkedList<Integer> res = driver.index1.get_all_documents_given_term(term);
             System.out.print("word:" + term + "[");
             res.display();
             System.out.print("}");
             System.out.print("-------------------------");
             System.out.print("- inverted index with lists");
-            boolean found = d.inverted.search_word_in_inverted(term);
+            boolean found = d.inverted.Search_InvertedList(term);
             if (found)
-              d.inverted.search_inverted_index.retrieve().display();
+              d.inverted.InvertList.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
             System.out.println("- inverted index with BST");
             boolean found2 = d.invertedBST.search_word_in_inverted(term);
             if (found2)
-              d.inverted.search_inverted_index.retrieve().display();
+              d.inverted.InvertList.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
             break;
@@ -216,7 +216,7 @@ int ch=0;
             do{
 
               if (x == 1){
-                QueryProcessing_from_index q = new QueryProcessing_from_index(Driver.index1);
+                QueryProcessing_from_index q = new QueryProcessing_from_index(driver.index1);
                 System.out.println("====="+ query+"======");
                 LinkedList res1 = QueryProcessing_from_index.MixedQuery(query);
                 d.displayDocWithGivenIDS(res1);
@@ -241,10 +241,10 @@ int ch=0;
 
               s.nextLine();
               System.out.println("enter a query to retrieve:");
-              String query = s.nextLine();
-              query = query.toLowerCase();
-              query = query.replaceAll("and","AND");
-              query = query.replaceAll("or","OR");
+              String query2 = s.nextLine();
+              query2 = query2.toLowerCase();
+              query2 = query2.replaceAll("and","AND");
+              query2 = query2.replaceAll("or","OR");
               System.out.println("\nwhich method do you want to retrieve:\n"
                       + "1- Index\n"
                       + "2- Inverted Index\n"
@@ -258,20 +258,20 @@ int ch=0;
               System.out.println("Enter a query to Rank");
               String query2 = s.nextLine();
               query2 = query2.toLowerCase();
-              Ranking R5= new Ranking(d.invertedBST,index1,query2);
+              Ranking R5= new Ranking(d.invertedBST, driver.index1,query2);
               R5.insert_sorted_in_list();
               R5.display_all_doc_with_score_usingList();
               break;
               case 4:
-                d.index1.diaplay_InvertedList();
+                d.index1.displayDocs();
                 System.out.println("---------------------");
                 break;
                 case 5:
-                  System.out.println("Number of documents="+Driver.index1.allDocs);
+                  System.out.println("Number of documents="+driver.index1.allDocs.n);
                   System.out.println("---------------------");
                   break;
                   case 6:
-                    System.out.println("Number of unique words without stop words="+d.inverted.inverted);
+                    System.out.println("Number of unique words without stop words="+d.inverted.InvertList.n);
                     System.out.println("---------------------");
                  break;
           case 7:
@@ -292,11 +292,11 @@ int ch=0;
           break;
         }
     }while(ch!=10);
-        }
+        }//method test with menu
 
 
 
 
 
 
-    }
+

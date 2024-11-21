@@ -73,8 +73,8 @@ for (int i=0;i<terms.length;i++){
 
 found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-A=inverted.Inverted.retrieve().doc_IDS;
-Adding_in_1_List_sorted(A);
+  A=inverted.Inverted.retrieve().doc_IDS;
+  Adding_in_1_List_sorted(A);
 }
 }
 public static void Adding_in_1_List_sorted(LinkedList<Integer>A)

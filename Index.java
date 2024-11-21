@@ -13,6 +13,22 @@ public class Index {
         allDocs.insert(doc);
     }
 
+    public Document getDoc(int i){
+        if(allDocs.isEmpty()){
+            System.out.println("No document exist!");
+            return null;
+        }
+        allDocs.findFirst();
+        while (!allDocs.last()){
+            if(allDocs.retrieve().id==i)
+                return allDocs.retrieve();
+            allDocs.findNext();
+        }
+        if(allDocs.retrieve().id==i)
+            return allDocs.retrieve();
+        return null;
+    }
+
     public void displayDocs(){
 
         if (allDocs.isEmpty())
