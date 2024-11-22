@@ -13,13 +13,13 @@ System.out.printf ("%-8d%-8d\n", id, rank) ;
 }
 public class Ranking{
 static String Query;
-static InvertedIndexBST invertedBST;
+static InvertedIndexBST inverted;
 static Index indexl;
 static LinkedList<Integer> all_doc_in_query;//doc ids
-static LinkedList<Doc_Rank>all_doc_ranked;//list of ranked documents
+static LinkedList<Doc_Rank> all_doc_ranked;//list of ranked documents
 
 public Ranking (InvertedIndexBST inverted, Index indexl, String Query) {
-this.invertedBST=inverted;
+this.inverted=inverted;
 this.indexl=indexl;
 this.Query=Query;
 all_doc_in_query=new LinkedList<Integer>() ;
@@ -27,14 +27,14 @@ all_doc_ranked=new LinkedList<Doc_Rank> () ;
 }
 
 
-public static void displayRanking() {
+public static void display_all_doc_with_score_usingList() {
 if (all_doc_ranked.isEmpty() ) {
-System.out.println("empty all_doc_ranked") ;
+System.out.println("empty") ;
 return;
 }
 System.out.printf("%-8s%-8s\n", "DoCID", "Score") ;
-all_doc_ranked. findFirst ();
-while (!all_doc_ranked. last ()){
+all_doc_ranked.findFirst ();
+while (!all_doc_ranked.last()){
 all_doc_ranked.retrieve().display();
 all_doc_ranked.findNext();
 }
@@ -43,17 +43,17 @@ all_doc_ranked.retrieve().display();
 
 
  public static Document get_doc_given_id(int id) {
-    return indexl.getDoc(id);
+    return indexl.get_document_given_id(id);
  }
  
  //counts how many times the word appeared in the document
-public static int term_frequency_in_doc (Document d, String word){
+public static int term_frequency_in_doc (Document d, String term){
 int freq=0;
 LinkedList<String>words=d.words;
 if (words.isEmpty()) return 0;
  words.findFirst ();
 while (!words.last()){
-if (words.retrieve ().equalsIgnoreCase(word))
+if (words.retrieve ().equalsIgnoreCase(term))
 freq++;
 words.findNext() ;}
 if (words.retrieve().equalsIgnoreCase(word) )
@@ -82,9 +82,9 @@ String terms []=Query.split ("\\s+");
 boolean found=false;
 for (int i=0;i<terms.length;i++){
 
-found=invertedBST.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
+found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-  A=invertedBST.inverted_indexBST.retrieve().doc_IDS;////////////////
+  A=inverted.inverted_indexBST.retrieve().doc_IDS;////////////////
   Adding_in_1_List_sorted(A);
 }
 }
@@ -149,7 +149,7 @@ return;}
 public static void insert_sorted_in_list(){
 RankQuery(Query);
 if(all_doc_in_query.isEmpty ()) {
-System.out.println("empty query in Ranking insert_sorted_in_list") ;
+System.out.println("empty query") ;
 return;}
 
 all_doc_in_query.findFirst();
@@ -191,6 +191,6 @@ all_doc_ranked.insert(dr1) ;
 return;
 }
  else
- all_doc_ranked.findNext() ;
+ all_doc_ranked.insert(dr) ;
 }
 }
