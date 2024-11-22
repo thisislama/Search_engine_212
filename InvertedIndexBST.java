@@ -8,20 +8,20 @@ public class InvertedIndexBST {
         inverted_indexBST = new BST<Word>();
     }
     
-    public void add_from_inverted_list(Inverted inverted){
+    /*public void add_from_inverted_list(Inverted inverted){
         
-        if (inverted.InvertList.isEmpty()){
+        if (inverted.inverted_indexBST.isEmpty()){
             return;
          }
         
-        inverted.InvertList.findFirst();
-        while (!inverted.InvertList.last()){
+        inverted.inverted_indexBST.findFirst();
+        while (!inverted.inverted_indexBST.last()){
             
-            inverted_indexBST.insert(inverted.InvertList.retrieve().text , inverted.InvertList.retrieve());
-            inverted.InvertList.findNext();
+            inverted_indexBST.insert(inverted.inverted_indexBST.retrieve().text , inverted.inverted_indexBST.retrieve());
+            inverted.inverted_indexBST.findNext();
         }
-            inverted_indexBST.insert(inverted.InvertList.retrieve().text , inverted.InvertList.retrieve());  
-}
+            inverted_indexBST.insert(inverted.inverted_indexBST.retrieve().text , inverted.inverted_indexBST.retrieve());  
+}*/
     
     public void add(String text , int id){
         
@@ -38,9 +38,9 @@ public class InvertedIndexBST {
     }
     
     public boolean search_word_in_inverted(String w){
-        
         return inverted_indexBST.findKey(w);
     }
+    
     
     public void display_inverted_index(){
         
