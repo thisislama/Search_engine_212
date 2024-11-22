@@ -1,26 +1,19 @@
 
+//mainly for inverted
 public class Word {
-    String text;
-    LinkedList<Integer> doc_IDS;
+    String text;//word
+    LinkedList<Integer> doc_IDS;//ids that have that word
 
     public Word(String w) {
         text = w;
         doc_IDS = new LinkedList<Integer>();
     }
-
+    //only adds if not exist
     public void add_Id(int id) {
         if (!existsIn_doc_IDS(id))
             doc_IDS.insert(id);
     }
 // can use exists in LinkedList instead
-
-    public void display(){
-        System.out.println("\n---------------");
-        System.out.println("word:"+text);
-                System.out.println("[");
-        doc_IDS.display();
-                System.out.println("]");
-    }
     public boolean existsIn_doc_IDS(Integer id) {
         if (doc_IDS.isEmpty())
             return false;
@@ -31,10 +24,14 @@ public class Word {
             }
             doc_IDS.findNext();
         }
-if (doc_IDS.retrieve().equals(id)) {
-                return true;
-}
-        return false;
+        return doc_IDS.retrieve().equals(id);
     }
 
+    public void display() {
+        System.out.println("\n------------");
+        System.out.print("Word: "+text);
+        System.out.print("[");
+        doc_IDS.display();
+        System.out.println("]");
+    }
 }
