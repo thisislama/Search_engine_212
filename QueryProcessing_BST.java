@@ -30,12 +30,12 @@ public class QueryProcessing_BST {
        if (Query.length()== 0)
            return A;
        
-       String ors[] = Query.split("OR");
+       String ORs[] = Query.split("OR");
        
-       A = AndQuery(ors[0]);
-       for (int i = 1 ; i<ors.length ; i++){
+       A = AndQuery(ORs[0]);
+       for (int i = 1 ; i<ORs.length ; i++){
            
-           B = AndQuery(ors[i]);
+           B = AndQuery(ORs[i]);
            A = OrQuery(A , B);
        }
        
