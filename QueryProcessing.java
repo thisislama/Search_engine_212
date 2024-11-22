@@ -1,12 +1,15 @@
+
 public class QueryProcessing {
 
+    //query processing on inverted index
     static Inverted inverted;
+    //query processing on inverted index bst
 
     public QueryProcessing(Inverted inverted) {
         this.inverted = inverted;
     }
-
-public static LinkedList<java.lang.Integer>BooleanQuery(String Query){
+//can be removed
+public static LinkedList<Integer>BooleanQuery(String Query){
   if (!Query.contains ("AND")&& !Query.contains ("OR") )
   return AndQuery (Query);
 else if (Query.contains ("AND") && !Query.contains ("OR") )
@@ -18,15 +21,15 @@ else
 }
 
 public static LinkedList<Integer> MixedQuery(String Query) {
-LinkedList< Integer> A=new LinkedList<Integer>() ;
+LinkedList<Integer> A=new LinkedList<Integer>() ;
 LinkedList<Integer> B=new LinkedList<Integer>() ; 
 if (Query.length()==0)
     return A;
-String ors[]=Query.split("OR") ;
+String ORs[]=Query.split("OR") ;
 
-for(int i=1;i<ors.length;i++)
+for(int i=1;i<ORs.length;i++)
 {
-B=AndQuery(ors[i]);
+B=AndQuery(ORs[i]);
 A=OrQuery(A,B);
 }
 return A;
@@ -43,17 +46,13 @@ return A;
         boolean found = inverted.Search_InvertedList(terms[0].trim().toLowerCase());
         if (found)
             A = inverted.InvertList.retrieve().doc_IDS;
-        else 
-            System.out.println("Term not found: " + terms[0]);
+        
 
         for (int i = 1; i < terms.length; i++) {
             found = inverted.Search_InvertedList(terms[i].trim().toLowerCase());
             if (found)
                 B = inverted.InvertList.retrieve().doc_IDS;
-            else {
-                System.out.println("Term not found: " + terms[i]);
-                B = new LinkedList<>();
-            }
+            
             A = AndQuery(A , B);
         }
         return A;
