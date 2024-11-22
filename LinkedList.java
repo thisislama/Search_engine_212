@@ -71,10 +71,10 @@ public class LinkedList<T> {
 
         Node<T> p = head;
         while (p != null) {
-            System.out.print(p.data + "");
+            System.out.print(p.data + " ");
             p = p.next;
         }
-        
+        System.out.println("");
     }
     
     public boolean exist(T x){
