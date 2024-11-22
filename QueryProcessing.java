@@ -26,7 +26,7 @@ LinkedList<Integer> B=new LinkedList<Integer>() ;
 if (Query.length()==0)
     return A;
 String ORs[]=Query.split("OR") ;
-
+A = AndQuery(ORs[0]);
 for(int i=1;i<ORs.length;i++)
 {
 B=AndQuery(ORs[i]);
