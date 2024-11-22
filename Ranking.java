@@ -1,4 +1,5 @@
 
+
 class Doc_Rank{
 int id;
 int rank;
@@ -12,21 +13,23 @@ System.out.printf ("%-8d%-8d\n", id, rank) ;
 }
 public class Ranking{
 static String Query;
-static InvertedIndexBST inverted;
+static InvertedIndexBST invertedBST;
 static Index indexl;
-static LinkedList<Integer> all_doc_in_query;
-static LinkedList<Doc_Rank>all_doc_ranked;
+static LinkedList<Integer> all_doc_in_query;//doc ids
+static LinkedList<Doc_Rank>all_doc_ranked;//list of ranked documents
 
 public Ranking (InvertedIndexBST inverted, Index indexl, String Query) {
-this.inverted=inverted;
+this.invertedBST=inverted;
 this.indexl=indexl;
 this.Query=Query;
 all_doc_in_query=new LinkedList<Integer>() ;
 all_doc_ranked=new LinkedList<Doc_Rank> () ;
 }
-public static void display_all_doc_with_score_usingList() {
+
+
+public static void displayRanking() {
 if (all_doc_ranked.isEmpty() ) {
-System.out.println("empty") ;
+System.out.println("empty all_doc_ranked") ;
 return;
 }
 System.out.printf("%-8s%-8s\n", "DoCID", "Score") ;
@@ -38,24 +41,28 @@ all_doc_ranked.findNext();
 all_doc_ranked.retrieve().display();
 }
 
+
  public static Document get_doc_given_id(int id) {
-    return get_doc_given_id(id);
+    return indexl.getDoc(id);
  }
-public static int term_frequency_in_doc (Document d, String term){
+ 
+ //counts how many times the word appeared in the document
+public static int term_frequency_in_doc (Document d, String word){
 int freq=0;
 LinkedList<String>words=d.words;
 if (words.isEmpty()) return 0;
  words.findFirst ();
 while (!words.last()){
-if (words.retrieve ().equalsIgnoreCase(term))
+if (words.retrieve ().equalsIgnoreCase(word))
 freq++;
 words.findNext() ;}
-if (words.retrieve().equalsIgnoreCase(term) )
+if (words.retrieve().equalsIgnoreCase(word) )
 freq++;
 return freq;
 
 }
 
+//counts frequency for ALL words in query , actual ranking
 public static int get_doc_rank_score (Document d, String Query){
 if (Query.length()==0)
 return 0;
@@ -66,6 +73,8 @@ sum_freq+=term_frequency_in_doc(d, terms[i].trim().toLowerCase ()) ;
 }
 return sum_freq;
 }
+
+//get linkedlist of each term in the query (Inverted) and add them to A,,then all_doc_in_query
 public static void RankQuery (String Query) {
 LinkedList<Integer> A =new LinkedList<Integer>();
 if (Query.length()==0) return ;
@@ -73,12 +82,14 @@ String terms []=Query.split ("\\s+");
 boolean found=false;
 for (int i=0;i<terms.length;i++){
 
-found=inverted.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
+found=invertedBST.search_word_in_inverted (terms [i].trim().toLowerCase()) ;
 if (found)
-  A=inverted.inverted_indexBST.retrieve().doc_IDS;
+  A=invertedBST.inverted_indexBST.retrieve().doc_IDS;////////////////
   Adding_in_1_List_sorted(A);
 }
 }
+
+//takes sorted ids linked lists
 public static void Adding_in_1_List_sorted(LinkedList<Integer>A)
 {
 if (A.isEmpty())
@@ -107,10 +118,12 @@ if (result.retrieve().equals(id) ) {
 return true;}
 return false;}
 
+
+//insert sorted ids (all_doc_in_query)
 public static void insert_sorted_Id_list (Integer id){
      if (all_doc_in_query.isEmpty()) {
          all_doc_in_query.insert(id);
-return;}
+            return;}
 all_doc_in_query.findFirst () ;
 while (!all_doc_in_query.last())
 {
@@ -131,10 +144,12 @@ return;}
  else
  all_doc_in_query.insert(id) ;
 }
+
+//ranked sorted
 public static void insert_sorted_in_list(){
 RankQuery(Query);
 if(all_doc_in_query.isEmpty ()) {
-System.out.println("empty query") ;
+System.out.println("empty query in Ranking insert_sorted_in_list") ;
 return;}
 
 all_doc_in_query.findFirst();
@@ -143,12 +158,16 @@ while (!all_doc_in_query.last ())
     Document d = get_doc_given_id(all_doc_in_query.retrieve());
     int Rank=get_doc_rank_score (d, Query) ;
     insert_sorted_list(new Doc_Rank(all_doc_in_query.retrieve(), Rank));
-    all_doc_in_query.findNext() ;}
+    all_doc_in_query.findNext() ;
+}
     Document d = get_doc_given_id(all_doc_in_query.retrieve());
     int Rank=get_doc_rank_score (d, Query) ;
     insert_sorted_list(new Doc_Rank(all_doc_in_query.retrieve(), Rank));
 }
+
+//sort ranks descending
 public static void insert_sorted_list(Doc_Rank dr){
+    
 if(all_doc_ranked.isEmpty ()) {
 all_doc_ranked.insert(dr) ;
 return;
