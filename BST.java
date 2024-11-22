@@ -1,5 +1,4 @@
 
-
 class BSTNode<T>{
     public String key;
     public T data;
@@ -22,9 +21,6 @@ public class BST<T> {
         current =root = null;
     }
 
-    public void clear(){
-        current = root = null;
-    }
 
     public boolean isEmpty(){
         return root==null;
@@ -88,7 +84,7 @@ private void inOrder(BSTNode<T> p){
         if(p==null) return;
         
         inOrder(p.left);
-        ((Word)p.data).display();
+        ((Word)p.data).display();//data is linkedlist
         inOrder(p.right);
     }
 
