@@ -185,6 +185,8 @@ int ch=0;
 
           case 2:
             s.nextLine();
+            int x;
+            do{
             System.out.println("enter a query to retrieve:");
             String query = s.nextLine();
             query = query.toLowerCase();
@@ -194,45 +196,37 @@ int ch=0;
                     + "1- Index\n"
                     + "2- Inverted Index\n"
                     + "3- BST\n");
-            int x = s.nextInt();
-            do{
+             x = s.nextInt();
+            s.nextLine();
+            //do{
 
               if (x == 1){
-                QueryProssing_from_index q = new QueryProssing_from_index(driver.index1);
+                QueryProssing_from_index q1 = new QueryProssing_from_index(driver.index1);
                 System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProssing_from_index.MixedQuery(query);
+                LinkedList res1 = q1.BooleanQuery(query);
                 d.displayDocWithGivenIDS(res1);
               }
               else if (x == 2){
-                QueryProcessing q = new QueryProcessing(d.inverted);
+                QueryProcessing q2 = new QueryProcessing(d.inverted);
                 System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProcessing.MixedQuery(query);
-                d.displayDocWithGivenIDS(res1);
+                LinkedList res2 = q2.BooleanQuery(query);
+                d.displayDocWithGivenIDS(res2);
               }
               else if (x == 3){
-                QueryProcessing_BST q = new QueryProcessing_BST(d.invertedBST);
+                QueryProcessing_BST q3 = new QueryProcessing_BST(d.invertedBST);
                 System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProcessing_BST.MixedQuery(query);
-                d.displayDocWithGivenIDS(res1);
+                LinkedList res3 = q3.BooleanQuery(query);
+                d.displayDocWithGivenIDS(res3);
               }
-              else if (x == 4){
+              else if (x > 3){
+                  System.out.println("wrong choice");
                 break;
               }
               else
                 System.out.println("Wrong Query");
 
-              s.nextLine();
-              System.out.println("enter a query to retrieve:");
-              String query2 = s.nextLine();
-              query2 = query2.toLowerCase();
-              query2 = query2.replaceAll("and","AND");
-              query2 = query2.replaceAll("or","OR");
-              System.out.println("\nwhich method do you want to retrieve:\n"
-                      + "1- Index\n"
-                      + "2- Inverted Index\n"
-                      + "3- BST\n");
-              x = s.nextInt();
             }while(x!= 4);
+            break;
 
             
             case 3:
@@ -274,17 +268,12 @@ int ch=0;
           break;
         }
     }while(ch!=10);
-        }//method test with menu
+        }
 
-
-
-  
-  
-  
   public void displaystopWords(){
     stopWords.display();
   }
-//class driver ends
+
 
 public static void display_menu(){
   System.out.println("1- Retrieve a term (there are choices"
@@ -301,132 +290,5 @@ public static void display_menu(){
   System.out.println("9- Indexed tokens: to show number of vocabulary and tokens in the index.");
 }
 
-public static void TeastwithMenu(){
-  /*driver d= new driver();
-    d.LoadAllFiles("C:\\Users\\96650\\Downloads\\stop.txt","C:\\Users\\96650\\Downloads\\dataset.csv");
-        Scanner s = new Scanner(System.in);
-int ch=0;
-    do{
-  display_menu();
-  ch=s.nextInt();
-        switch(ch) {
-          case 1:
-            System.out.println("enter a term to retrieve");
-            String term = s.next();
-            term = term.toLowerCase().trim();
-            System.out.println(": using indix with lists");
-            LinkedList<Integer> res = driver.index1.getDocsGivenTerm(term);
-            System.out.print("word:" + term + "[");
-            res.display();
-            System.out.print("}");
-            System.out.print("-------------------------");
-            System.out.print("- inverted index with lists");
-            boolean found = d.inverted.Search_InvertedList(term);
-            if (found)
-              d.inverted.InvertList.retrieve().display();
-            else
-              System.out.println("not found in inverted index with lists");
-            System.out.println("- inverted index with BST");
-            boolean found2 = d.invertedBST.search_word_in_inverted(term);
-            if (found2)
-              d.inverted.InvertList.retrieve().display();
-            else
-              System.out.println("not found in inverted index with lists");
-            break;
-
-          case 2:
-            s.nextLine();
-            System.out.println("enter a query to retrieve:");
-            String query = s.nextLine();
-            query = query.toLowerCase();
-            query = query.replaceAll("and","AND");
-            query = query.replaceAll("or","OR");
-            System.out.println("\nwhich method do you want to retrieve:\n"
-                    + "1- Index\n"
-                    + "2- Inverted Index\n"
-                    + "3- BST\n");
-            int x = s.nextInt();
-            do{
-
-              if (x == 1){
-                QueryProssing_from_index q = new QueryProssing_from_index(driver.index1);
-                System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProssing_from_index.MixedQuery(query);
-                d.displayDocWithGivenIDS(res1);
-              }
-              else if (x == 2){
-                QueryProcessing q = new QueryProcessing(d.inverted);
-                System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProcessing.MixedQuery(query);
-                d.displayDocWithGivenIDS(res1);
-              }
-              else if (x == 3){
-                QueryProcessing_BST q = new QueryProcessing_BST(d.invertedBST);
-                System.out.println("====="+ query+"======");
-                LinkedList res1 = QueryProcessing_BST.MixedQuery(query);
-                d.displayDocWithGivenIDS(res1);
-              }
-              else if (x == 4){
-                break;
-              }
-              else
-                System.out.println("Wrong Query");
-
-              s.nextLine();
-              System.out.println("enter a query to retrieve:");
-              String query2 = s.nextLine();
-              query2 = query2.toLowerCase();
-              query2 = query2.replaceAll("and","AND");
-              query2 = query2.replaceAll("or","OR");
-              System.out.println("\nwhich method do you want to retrieve:\n"
-                      + "1- Index\n"
-                      + "2- Inverted Index\n"
-                      + "3- BST\n");
-              x = s.nextInt();
-            }while(x!= 4);
-
-            
-            case 3:
-              s.nextLine();
-              System.out.println("Enter a query to Rank");
-              String query2 = s.nextLine();
-              query2 = query2.toLowerCase();
-              Ranking R5= new Ranking(d.invertedBST, driver.index1,query2);
-              R5.insert_sorted_in_list();
-              R5.displayRanking();
-              break;
-              case 4:
-                d.index1.displayDocs();
-                System.out.println("---------------------");
-                break;
-                case 5:
-                  System.out.println("Number of documents="+driver.index1.allDocs.n);
-                  System.out.println("---------------------");
-                  break;
-                  case 6:
-                    System.out.println("Number of unique words without stop words="+d.inverted.InvertList.n);
-                    System.out.println("---------------------");
-                 break;
-          case 7:
-            d.inverted.diaplay_InvertedList();
-            break;
-          case 8:
-            d.invertedBST.display_inverted_index();
-            break;
-          case 9:
-            System.out.println("num of tokens="+d.num_token);
-            System.out.println("num of unique words including stop words=="+d.uniqueWords.n);
-            break;
-          case 10:
-            System.out.println("goodbye");
-            break;
-          default:
-          System.out.println("error input try again");
-          break;
-        }
-    }while(ch!=10);
-        }//method test with menu
-
-*/
-}}
+}
 
