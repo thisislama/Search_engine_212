@@ -21,7 +21,7 @@ public class Inverted {
         }
         else {// if the word already on the list
             Word exisit_word = InvertList.retrieve();// return Word
-            exisit_word.add_Id(Id);// adds id to the retrieved word doc_IDS, add_Id?
+            exisit_word.addIdInWord(Id);// adds id to the retrieved word doc_IDS, add_Id?
         }
     }//method add end
 
