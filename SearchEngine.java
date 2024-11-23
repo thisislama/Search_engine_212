@@ -1,9 +1,11 @@
 
+
+//import java.util.LinkedList;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class driver {
+public class SearchEngine {
   
   LinkedList<String> stopWords;
   static Index index1;
@@ -12,7 +14,7 @@ public class driver {
   int num_token = 0;
   LinkedList<String> uniqueWords = new LinkedList<>();
   
-  public driver(){
+  public SearchEngine(){
     
   stopWords= new LinkedList<>();
   index1= new Index();
@@ -61,7 +63,7 @@ public class driver {
           String content=line.substring(line.indexOf(',')+1).trim();
           System.out.println("content: "+content);
           //stores every word in a linked list of strings 
-          LinkedList<String> wordsInDoc=MakeLinkedListOfWordsInDocIndexInvertedIndex(content,id);
+          LinkedList<String> wordsInDoc=CreateLinkedForIndex_Inverted(content,id);
           //creates new Document object, adds it to Index adds to allDocs
           index1.addDoc(new Document(id,wordsInDoc, content));
         }
@@ -72,18 +74,23 @@ public class driver {
     }
 
   //linked list of words in Document, calls MakeIndexAndInvertedIndex
-  public LinkedList<String> MakeLinkedListOfWordsInDocIndexInvertedIndex(String content,int id)
+  public LinkedList<String> CreateLinkedForIndex_Inverted(String content,int id)
   {
    LinkedList<String>wordsInDoc=new LinkedList<String>();
-    MakeIndexAndInvertedIndex(content,wordsInDoc,id);
+    CreateIndexInverted(content,wordsInDoc,id);
     return wordsInDoc;
   }
 
   //cleans content and adds to array, inverted  , invertedBST 
-  public void MakeIndexAndInvertedIndex(String content,LinkedList<String>wordsInDoc,int id)
+  public void CreateIndexInverted(String content,LinkedList<String>wordsInDoc,int id)
   {
-    content=content.toLowerCase().replaceAll("\'"," ");
-    content=content.toLowerCase().replaceAll("-"," ");
+      while(content.contains("-")){
+          if(content.charAt(content.indexOf("-")-2)==' ')
+              content = content.replaceFirst("-", "");
+          else
+              content = content.replaceFirst("-", " ");
+      }
+      
     content=content.toLowerCase().replaceAll("[^a-zA-Z0-9 ]","");
     String[] tokens=content.split("\\s+");
     num_token += tokens.length;
@@ -92,7 +99,7 @@ public class driver {
       if(!uniqueWords.exist(w)){
       uniqueWords.insert(w);
       }
-      if (!existIn_stop_words(w)){ //if it doesn't exist in stop words --> add to words array , inverted index , inverted index BST
+      if (!existInStopWords(w)){ //if it doesn't exist in stop words --> add to words array , inverted index , inverted index BST
           wordsInDoc.insert(w);
           inverted.add(w,id);
           invertedBST.add(w , id);
@@ -101,7 +108,7 @@ public class driver {
   }
 
   //search in stop words
-  public boolean existIn_stop_words(String word)
+  public boolean existInStopWords(String word)
   {
     if(stopWords==null || stopWords.isEmpty())
       return false;
@@ -149,7 +156,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
   
   public static void main(String[]args)
   {
-    driver d= new driver();
+    SearchEngine d= new SearchEngine();
         
   
     d.LoadAllFiles("C:\\Users\\96650\\Downloads\\stop.txt","C:\\Users\\96650\\Downloads\\dataset.csv");
@@ -163,24 +170,25 @@ int ch=0;
             System.out.println("enter a term to retrieve");
             String term = s.next();
             term = term.toLowerCase().trim();
-            System.out.println(": using indix with lists");
-            LinkedList<Integer> res = driver.index1.getDocsGivenTerm(term);
-            System.out.print("word:" + term + "[");
+            System.out.println("index with lists: ");
+            LinkedList<Integer> res = SearchEngine.index1.getDocsGivenTerm(term);
+            System.out.print("word:" + term + " : ");
             res.display();
-            System.out.print("}");
-            System.out.print("-------------------------");
-            System.out.print("- inverted index with lists");
+            System.out.println("-------------------------");
+            System.out.print("inverted index with lists: ");
             boolean found = d.inverted.Search_InvertedList(term);
             if (found)
               d.inverted.InvertList.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
-            System.out.println("- inverted index with BST");
+            System.out.println("-------------------------");
+            System.out.println("inverted index with BST: ");
             boolean found2 = d.invertedBST.search_word_in_inverted(term);
             if (found2)
               d.inverted.InvertList.retrieve().display();
             else
               System.out.println("not found in inverted index with lists");
+            System.out.println("-------------------------");
             break;
 
           case 2:
@@ -201,19 +209,19 @@ int ch=0;
             //do{
 
               if (x == 1){
-                QueryProssing_from_index q1 = new QueryProssing_from_index(driver.index1);
+                QueryProcessingIndex q1 = new QueryProcessingIndex(SearchEngine.index1);
                 System.out.println("====="+ query+"======");
                 LinkedList res1 = q1.BooleanQuery(query);
                 d.displayDocWithGivenIDS(res1);
               }
               else if (x == 2){
-                QueryProcessing q2 = new QueryProcessing(d.inverted);
+                QueryProcessingInverted q2 = new QueryProcessingInverted(d.inverted);
                 System.out.println("====="+ query+"======");
                 LinkedList res2 = q2.BooleanQuery(query);
                 d.displayDocWithGivenIDS(res2);
               }
               else if (x == 3){
-                QueryProcessing_BST q3 = new QueryProcessing_BST(d.invertedBST);
+                QueryProcessingBST q3 = new QueryProcessingBST(d.invertedBST);
                 System.out.println("====="+ query+"======");
                 LinkedList res3 = q3.BooleanQuery(query);
                 d.displayDocWithGivenIDS(res3);
@@ -234,7 +242,7 @@ int ch=0;
               System.out.println("Enter a query to Rank");
               String query2 = s.nextLine();
               query2 = query2.toLowerCase();
-              Ranking R5= new Ranking(d.invertedBST, driver.index1,query2);
+              Ranking R5= new Ranking(d.invertedBST, SearchEngine.index1,query2);
               R5.insert_sorted_in_list();
               R5.displayRanking();
               break;
@@ -243,24 +251,26 @@ int ch=0;
                 System.out.println("---------------------");
                 break;
                 case 5:
-                  System.out.println("Number of documents="+driver.index1.allDocs.n);
+                  System.out.println("Number of documents="+SearchEngine.index1.allDocs.n);
                   System.out.println("---------------------");
                   break;
-                  case 6:
-                    System.out.println("Number of unique words without stop words="+d.inverted.InvertList.n);
-                    System.out.println("---------------------");
-                 break;
-          case 7:
+          case 6:
             d.inverted.diaplay_InvertedList();
+            System.out.println("---------------------");
+            break;
+          case 7:
+            d.invertedBST.display_inverted_index();
+            System.out.println("---------------------");
             break;
           case 8:
-            d.invertedBST.display_inverted_index();
+            System.out.println("num of tokens="+d.num_token);
+            //System.out.println("num of unique words including stop words=="+d.uniqueWords.n);
+            System.out.println("Number of unique words without stop words="+d.inverted.InvertList.n);
+            System.out.println("Number of unique words with stop words="+d.uniqueWords.n);
+
+            System.out.println("---------------------");
             break;
           case 9:
-            System.out.println("num of tokens="+d.num_token);
-            System.out.println("num of unique words including stop words=="+d.uniqueWords.n);
-            break;
-          case 10:
             System.out.println("goodbye");
             break;
           default:
@@ -276,18 +286,14 @@ int ch=0;
 
 
 public static void display_menu(){
-  System.out.println("1- Retrieve a term (there are choices"
-  +":using index with lists"
-  +"-inverted index with lists"
-  +"-inverted index with BST.");
+  System.out.println("1- Retrieve a term. ");
   System.out.println("2- Boolean Retrieval.");
   System.out.println("3- Ranking Retrieval.");
-  System.out.println("4- Indexed Documents: print all document.");
+  System.out.println("4- Indexed Documents: print all documents.");
   System.out.println("5- Number of Documents in the index.");
-  System.out.println("6- Number of unique words in indexed.");
-  System.out.println("7- Show inverted index with list of lists.");
-  System.out.println("8- Show inverted index with BST.");
-  System.out.println("9- Indexed tokens: to show number of vocabulary and tokens in the index.");
+  System.out.println("6- Show inverted index with list of lists.");
+  System.out.println("7- Show inverted index with BST.");
+  System.out.println("8- Indexed tokens: to show number of vocabulary and tokens in the index.");
 }
 
 }
