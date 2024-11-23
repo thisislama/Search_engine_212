@@ -6,8 +6,8 @@ public class ReadDataset {
 
     public static void main(String [] args){
         //changed
-        Load("C:\\Users\\96650\\Downloads\\dataset.csv");
-        Load("C:\\Users\\96650\\Downloads\\stop.txt");
+        Load("C:data\\dataset.csv");
+        Load("C:data\\stop.txt");
     }
 
     public static void Load(String filename){

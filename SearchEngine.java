@@ -159,7 +159,7 @@ public void displayDocWithGivenIDS(LinkedList<Integer> IDs){
     SearchEngine d= new SearchEngine();
         
   
-    d.LoadAllFiles("C:\\Users\\96650\\Downloads\\stop.txt","C:\\Users\\96650\\Downloads\\dataset.csv");
+    d.LoadAllFiles("C:data\\stop.txt","C:data\\dataset.csv");
         Scanner s = new Scanner(System.in);
 int ch=0;
     do{

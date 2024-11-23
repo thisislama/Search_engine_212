@@ -12,7 +12,6 @@ public class Index {
     }
 
     public void addDoc(Document doc){
-
         allDocs.insert(doc);
     }
 //gets document given id
