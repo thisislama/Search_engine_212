@@ -1,9 +1,9 @@
 
-public class QueryProcessing_BST {
+public class QueryProcessingBST {
     
     static InvertedIndexBST inverted;
     
-    public QueryProcessing_BST(InvertedIndexBST inverted){
+    public QueryProcessingBST(InvertedIndexBST inverted){
         this.inverted = inverted;
         
     }
