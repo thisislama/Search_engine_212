@@ -9,12 +9,12 @@ public class Word {
         doc_IDS = new LinkedList<Integer>();
     }
     //only adds if not exist
-    public void add_Id(int id) {
-        if (!existsIn_doc_IDS(id))
+    public void addIdInWord(int id) {
+        if (!existsInDocIDS(id))
             doc_IDS.insert(id);
     }
-// can use exists in LinkedList instead
-    public boolean existsIn_doc_IDS(Integer id) {
+
+    public boolean existsInDocIDS(Integer id) {
         if (doc_IDS.isEmpty())
             return false;
         doc_IDS.findFirst();
@@ -28,10 +28,10 @@ public class Word {
     }
 
     public void display() {
-        System.out.println("\n------------");
+        System.out.println("");
         System.out.print("Word: "+text);
-        System.out.print("[");
+        System.out.print(" : ");
         doc_IDS.display();
-        System.out.println("]");
+        
     }
 }
