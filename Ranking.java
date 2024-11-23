@@ -1,5 +1,4 @@
 
-
 class Doc_Rank{
 int id;
 int rank;
@@ -27,7 +26,7 @@ all_doc_ranked=new LinkedList<Doc_Rank> () ;
 }
 
 
-public static void display_all_doc_with_score_usingList() {
+public static void displayRanking() {
 if (all_doc_ranked.isEmpty() ) {
 System.out.println("empty") ;
 return;
@@ -43,7 +42,7 @@ all_doc_ranked.retrieve().display();
 
 
  public static Document get_doc_given_id(int id) {
-    return indexl.get_document_given_id(id);
+    return indexl.getDoc(id);
  }
  
  //counts how many times the word appeared in the document
@@ -56,7 +55,7 @@ while (!words.last()){
 if (words.retrieve ().equalsIgnoreCase(term))
 freq++;
 words.findNext() ;}
-if (words.retrieve().equalsIgnoreCase(word) )
+if (words.retrieve().equalsIgnoreCase(term) )
 freq++;
 return freq;
 
