@@ -1,8 +1,8 @@
 
-public class QueryProssing_from_index {
+public class QueryProcessingIndex {
     static Index index1;
 
-    public QueryProssing_from_index(Index index1) {
+    public QueryProcessingIndex(Index index1) {
         this.index1 = index1;
     }
 
