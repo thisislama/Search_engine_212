@@ -1,11 +1,11 @@
 
-public class QueryProcessing {
+public class QueryProcessingInverted {
 
     //query processing on inverted index
     static Inverted inverted;
     //query processing on inverted index bst
 
-    public QueryProcessing(Inverted inverted) {
+    public QueryProcessingInverted(Inverted inverted) {
         this.inverted = inverted;
     }
 //can be removed
