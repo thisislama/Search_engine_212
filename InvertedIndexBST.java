@@ -8,20 +8,6 @@ public class InvertedIndexBST {
         inverted_indexBST = new BST<Word>();
     }
     
-    /*public void add_from_inverted_list(Inverted inverted){
-        
-        if (inverted.inverted_indexBST.isEmpty()){
-            return;
-         }
-        
-        inverted.inverted_indexBST.findFirst();
-        while (!inverted.inverted_indexBST.last()){
-            
-            inverted_indexBST.insert(inverted.inverted_indexBST.retrieve().text , inverted.inverted_indexBST.retrieve());
-            inverted.inverted_indexBST.findNext();
-        }
-            inverted_indexBST.insert(inverted.inverted_indexBST.retrieve().text , inverted.inverted_indexBST.retrieve());  
-}*/
     
     public void add(String text , int id){
         
@@ -33,7 +19,7 @@ public class InvertedIndexBST {
         } else{
             
             Word existing_word = inverted_indexBST.retrieve();
-            existing_word.add_Id(id);
+            existing_word.addIdInWord(id);
         }
     }
     
