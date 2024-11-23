@@ -116,31 +116,6 @@ public class QueryProcessingIndex {
         return result;
     }
 
-    public static LinkedList<Integer> notquery(String Query, Index ind1) {
-        LinkedList<Integer> A = new LinkedList<Integer>();
-        LinkedList<Integer> B = new LinkedList<Integer>();
-        if (Query.length() == 0) return A;
-
-        if (!Query.contains("NOT")) return A;
-
-        String term = Query.replaceFirst("NOT", "").trim().toLowerCase();
-        A = index1.getDocsGivenTerm(term.trim().toLowerCase());
-
-        if (ind1.allDocs.isEmpty()) return A;
-
-        ind1.allDocs.findFirst();
-        while (!ind1.allDocs.last()) {
-            if (!A.exist(ind1.allDocs.retrieve().id))
-                B.insert(ind1.allDocs.retrieve().id);
-            ind1.allDocs.findNext();
-        }
-
-        if (!A.exist(ind1.allDocs.retrieve().id))
-            B.insert(ind1.allDocs.retrieve().id);
-
-        return B;
-    }
-
     public static boolean existsIn_result(LinkedList<Integer> result, Integer id) {
         if (result.isEmpty()) return false;
 
